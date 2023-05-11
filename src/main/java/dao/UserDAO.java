@@ -19,8 +19,8 @@ public class UserDAO extends DAO {
 	}
 	
 	// Adiciona 1 usuário
-	public boolean insert(User user) {
-		boolean status = false;
+	public User insert(User user) {
+		User userResponse = null;
 		try {  
 			Statement st = conexao.createStatement();
 			String sql = "INSERT INTO \"user\" (cpf, email, full_name, senha, age)"
@@ -31,13 +31,14 @@ public class UserDAO extends DAO {
 				       + user.getSenha() + "', '"
 				       + user.getAge() + "');";
 			System.out.println(sql);
-			st.executeUpdate(sql);
+			st.executeQuery(sql);
+	        
 			st.close();
-			status = true;
 		} catch (SQLException u) {  
 			throw new RuntimeException(u);
 		}
-		return status;
+		userResponse = buscaUser(user.getEmail(), user.getSenha());
+		return userResponse;
 	}
 	
 	// Pesquisa 1 usuário baseado no codigo (chave única)
