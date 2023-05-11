@@ -34,7 +34,7 @@ public class Aplicacao {
                 return "OK";
             });
 
-        before((request, response) -> response.header("Access-Control-Allow-Origin", ""));
+        before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
 
         post("/user/cadastro", (request, response) -> userService.insert(request, response)); // rota
         

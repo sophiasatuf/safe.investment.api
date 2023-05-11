@@ -143,7 +143,7 @@ public class UserDAO extends DAO {
 			String sql = "SELECT * FROM \"user\" WHERE email='" + email + "' AND senha='" + senha + "\'";
 			System.out.println(sql);
 			ResultSet rs = st.executeQuery(sql);	
-	        if(rs.next()){            
+	        if(rs.next()){
 	        	 user = new User(rs.getString("cpf"), rs.getString("email"), rs.getString("full_name"), rs.getString("senha"), rs.getInt("age"), rs.getInt("codigo"));
 	        }
 	        st.close();

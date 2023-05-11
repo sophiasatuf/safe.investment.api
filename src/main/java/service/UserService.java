@@ -4,7 +4,6 @@ import dao.UserDAO;
 import spark.Request;
 import spark.Response;
 import model.User;
-import com.google.gson.Gson;
 
 // Cria as regras de negócio e recebe os dados da request e retorna uma response
 
@@ -35,14 +34,13 @@ public class UserService {
 	// Login de usuário
 	public String login(Request request, Response response) {
 		String resposta = "";
-		Gson gson = new Gson();
 		
 		String email = request.queryParams("email");
 		String senha = request.queryParams("senha");
 		
 		User u = userDAO.buscaUser(email, senha);
 		if(u != null) {
-			resposta = gson.toJson(u);
+			resposta = u.getEmail();
 		}
 		
 		return resposta;
