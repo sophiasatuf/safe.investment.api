@@ -19,6 +19,7 @@ public class ProfessorDAO extends DAO {
 	// Adiciona 1 professor
 	public Professor insert(Professor professor) {
 		Professor professorResponse = null;
+		System.out.println("Estou aqui");
 		try {  
 			Statement st = conexao.createStatement();
 			String sql = "INSERT INTO \"professor\" (userID, avgGrade, stamp)"
@@ -28,8 +29,8 @@ public class ProfessorDAO extends DAO {
 				       + professor.getStamp() + "');";
 			System.out.println(sql);
 			ResultSet rs = st.executeQuery(sql);	
-	        if(rs.next()){            
-	        	 professorResponse = new Professor(rs.getInt("userID"), rs.getFloat("avgGrade"), rs.getBoolean("stamp"), rs.getInt("codigo"));
+	        if(rs.next()){	
+	        	professorResponse = new Professor(rs.getInt("userID"), rs.getFloat("avgGrade"), rs.getBoolean("stamp"), rs.getInt("codigo"));
 	        }
 			st.close();
 		} catch (SQLException u) {  

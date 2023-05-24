@@ -19,8 +19,7 @@ public class UserDAO extends DAO {
 	}
 	
 	// Adiciona 1 usuário
-	public User insert(User user) {
-		User userResponse = null;
+	public void insert(User user) throws Exception {
 		try {  
 			Statement st = conexao.createStatement();
 			String sql = "INSERT INTO \"user\" (cpf, email, full_name, senha, age)"
@@ -37,8 +36,7 @@ public class UserDAO extends DAO {
 		} catch (SQLException u) {  
 			throw new RuntimeException(u);
 		}
-		userResponse = buscaUser(user.getEmail(), user.getSenha());
-		return userResponse;
+		
 	}
 	
 	// Pesquisa 1 usuário baseado no codigo (chave única)
@@ -140,6 +138,7 @@ public class UserDAO extends DAO {
 		User user = null;
 		
 		try {
+			System.out.println("Estou na busca!");
 			Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
 			String sql = "SELECT * FROM \"user\" WHERE email='" + email + "' AND senha='" + senha + "\'";
 			System.out.println(sql);

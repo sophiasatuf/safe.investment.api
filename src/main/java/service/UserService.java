@@ -23,11 +23,14 @@ public class UserService {
 		String fullName = request.queryParams("fullName");
 		String senha = request.queryParams("senha");
 		boolean isProfessor = Boolean.parseBoolean(request.queryParams("isProfessor"));
+		System.out.println(isProfessor);
 		
 		try {
-			User user = userDAO.insert(new User(cpf, email, fullName, senha, age, -1));
+			userDAO.insert(new User(cpf, email, fullName, senha, age, -1));
+			User user = userDAO.buscaUser(email, senha);
 			int userID = user.getCodigo();
 			if(isProfessor) {
+				System.out.println(userID);
 				professorDAO.insert(new Professor(userID, 0, false, -1));
 			}
 		}
