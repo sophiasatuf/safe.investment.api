@@ -20,7 +20,7 @@ public class UserDAO extends DAO {
 	
 	// Adiciona 1 usuário
 	public void insert(User user) throws Exception {
-		try {  
+		try {
 			Statement st = conexao.createStatement();
 			String sql = "INSERT INTO \"user\" (cpf, email, full_name, senha, age)"
 				       + " VALUES ('"
@@ -30,10 +30,10 @@ public class UserDAO extends DAO {
 				       + user.getSenha() + "', '"
 				       + user.getAge() + "');";
 			System.out.println(sql);
-			st.executeQuery(sql);
+			st.executeUpdate(sql);
 	        
 			st.close();
-		} catch (SQLException u) {  
+		} catch (SQLException u) {
 			throw new RuntimeException(u);
 		}
 		
@@ -135,6 +135,7 @@ public class UserDAO extends DAO {
 	
 	// Busca 1 usuário de acordo com email e senha
 	public User buscaUser(String email, String senha) {
+		System.out.println("Stage 5");
 		User user = null;
 		
 		try {

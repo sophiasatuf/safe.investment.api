@@ -27,6 +27,7 @@ public class UserService {
 		
 		try {
 			userDAO.insert(new User(cpf, email, fullName, senha, age, -1));
+			System.out.println("Stage 4");
 			User user = userDAO.buscaUser(email, senha);
 			int userID = user.getCodigo();
 			if(isProfessor) {

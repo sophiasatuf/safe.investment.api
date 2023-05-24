@@ -17,9 +17,7 @@ public class ProfessorDAO extends DAO {
 	}
 	
 	// Adiciona 1 professor
-	public Professor insert(Professor professor) {
-		Professor professorResponse = null;
-		System.out.println("Estou aqui");
+	public void insert(Professor professor) {
 		try {  
 			Statement st = conexao.createStatement();
 			String sql = "INSERT INTO \"professor\" (userID, avgGrade, stamp)"
@@ -28,14 +26,10 @@ public class ProfessorDAO extends DAO {
 				       + professor.getAvgGrade() + "', '"
 				       + professor.getStamp() + "');";
 			System.out.println(sql);
-			ResultSet rs = st.executeQuery(sql);	
-	        if(rs.next()){	
-	        	professorResponse = new Professor(rs.getInt("userID"), rs.getFloat("avgGrade"), rs.getBoolean("stamp"), rs.getInt("codigo"));
-	        }
+			st.executeUpdate(sql);
 			st.close();
 		} catch (SQLException u) {  
 			throw new RuntimeException(u);
 		}
-		return professorResponse;
 	}
 }
