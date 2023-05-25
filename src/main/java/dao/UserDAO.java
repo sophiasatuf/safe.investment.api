@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import model.User;
@@ -135,11 +136,9 @@ public class UserDAO extends DAO {
 	
 	// Busca 1 usuário de acordo com email e senha
 	public User buscaUser(String email, String senha) {
-		System.out.println("Stage 5");
 		User user = null;
 		
 		try {
-			System.out.println("Estou na busca!");
 			Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
 			String sql = "SELECT * FROM \"user\" WHERE email='" + email + "' AND senha='" + senha + "\'";
 			System.out.println(sql);

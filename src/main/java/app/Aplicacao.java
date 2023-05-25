@@ -2,6 +2,7 @@ package app;
 
 import static spark.Spark.*;
 import service.UserService;
+import service.ClasseService;
 
 // Aplicacao -> service -> DAO -> Banco de Dados
 // Declarar rotas de recebimento dos dados front-end
@@ -9,6 +10,7 @@ import service.UserService;
 public class Aplicacao {
 
     private static UserService userService = new UserService();
+    private static ClasseService classeService = new ClasseService();
 
     public static void main(String[] args) {
         port(6789);
@@ -35,10 +37,17 @@ public class Aplicacao {
             });
 
         before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
+        
+        // ----------- Usuário ---------- //
 
         post("/user/cadastro", (request, response) -> userService.insert(request, response)); // rota
         
         post("/user/login", (request, response) -> userService.login(request, response));
+        
+        // ----------- Classe ---------- //
+        
+        post("/classe/cadastro", (request, response) -> classeService.insert(request, response));
+        get("/classe/busca", (request, response) -> classeService.busca(request, response));
 /*
         get("/car/:id", (request, response) -> carService.get(request, response));
 
