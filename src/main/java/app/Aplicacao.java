@@ -1,6 +1,7 @@
 package app;
 
 import static spark.Spark.*;
+import service.PublicacaoService;
 import service.UserService;
 import service.ClasseService;
 
@@ -11,6 +12,7 @@ public class Aplicacao {
 
     private static UserService userService = new UserService();
     private static ClasseService classeService = new ClasseService();
+    private static PublicacaoService publicacaoService = new PublicacaoService();
 
     public static void main(String[] args) {
         port(6789);
@@ -47,7 +49,16 @@ public class Aplicacao {
         // ----------- Classe ---------- //
         
         post("/classe/cadastro", (request, response) -> classeService.insert(request, response));
+        
         get("/classe/busca", (request, response) -> classeService.busca(request, response));
+        
+        get("/classe/buscaProfessor", (request, response) -> classeService.buscaProfessor(request, response));
+        
+        // ----------- Publicação ---------- //
+        
+        post("/publicacao/cadastro", (request, response) -> publicacaoService.insert(request, response));
+        
+        get("/publicacao/busca", (request, response) -> publicacaoService.busca(request, response));
 /*
         get("/car/:id", (request, response) -> carService.get(request, response));
 

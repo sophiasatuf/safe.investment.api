@@ -5,6 +5,8 @@ import dao.ClasseDAO;
 import spark.Request;
 import spark.Response;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
+import java.util.StringJoiner;
 
 // Cria a classe
 public class ClasseService {
@@ -28,17 +30,56 @@ public class ClasseService {
 	}
 	
 	// Busca classe com base no título
-	public ArrayList<Classe> busca(Request request, Response response){
+	public String busca(Request request, Response response){
 		String stringBusca = request.queryParams("stringBusca");
-		ArrayList<Classe> resultado = new ArrayList<Classe>();
+		ArrayList<Classe> lista = new ArrayList<Classe>();
 		
 		try {
-			resultado = classeDAO.getClasseByTitulo(stringBusca);
+			lista = classeDAO.getClasseByTitulo(stringBusca);
 		}
 		catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		
+		StringJoiner joiner = new StringJoiner(", ");
+        for (Classe objeto : lista) {
+        	joiner.add("{ \"codigo\": \"" + Integer.toString(objeto.getCodigo()) + "\"");
+        	joiner.add(" \"titulo\":  \"" + objeto.getTitulo() + "\"");
+            joiner.add(" \"descicao\":  \"" + objeto.getDescricao() + "\"");
+            joiner.add(" \"professorId\":  \"" + Integer.toString(objeto.getProfessorId()) + "\" }");
+        }
+
+        String resultado = joiner.toString();
+		
+		//String resultado = lista.stream().map(Object::toString).collect(Collectors.joining(", "));
+		
+		System.out.println(resultado);
 		return resultado;
 	}
+	
+	// Busca classes com base no professorId
+	public String buscaProfessor(Request request, Response response){
+		int professorId = Integer.parseInt(request.queryParams("professorId"));
+		ArrayList<Classe> lista = new ArrayList<Classe>();
+		
+		try {
+			lista = classeDAO.getClasseByProfessorId(professorId);
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		StringJoiner joiner = new StringJoiner(", ");
+        for (Classe objeto : lista) {
+        	joiner.add("{ \"codigo\": \"" + Integer.toString(objeto.getCodigo()) + "\"");
+        	joiner.add(" \"titulo\":  \"" + objeto.getTitulo() + "\"");
+            joiner.add(" \"descicao\":  \"" + objeto.getDescricao() + "\"");
+            joiner.add(" \"professorId\":  \"" + Integer.toString(objeto.getProfessorId()) + "\" }");
+        }
+
+        String resultado = joiner.toString();
+		
+		return resultado;
+	}
+	
 }

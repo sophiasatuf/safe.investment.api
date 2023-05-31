@@ -22,3 +22,35 @@ CREATE TABLE public.classe (
 	professorid INTEGER,
 	FOREIGN KEY (professorid) REFERENCES "professor"(codigo)
 );
+
+CREATE TABLE public.publicacao (
+    codigo SERIAL PRIMARY KEY,
+    urlvideo VARCHAR(255),
+    hashtags VARCHAR(50),
+    titulo VARCHAR(100),
+    classeid INTEGER,
+    visualizacoes INTEGER,
+    likes INTEGER,
+    dislikes INTEGER,
+    datapostagem DATE,
+    FOREIGN KEY (classeid) REFERENCES "classe"(codigo)
+);
+
+CREATE TABLE public.userClasse (
+    codigo SERIAL PRIMARY KEY,
+    userid INTEGER,
+    FOREIGN KEY (userid) REFERENCES "user"(codigo),
+    classeid INTEGER,
+    FOREIGN KEY (classeid) REFERENCES "classe"(codigo)
+);
+
+CREATE TABLE public.comentarios (
+    codigo SERIAL PRIMARY KEY,
+    userid INTEGER,
+    FOREIGN KEY (userid) REFERENCES "user"(codigo),
+    publicacaoid INTEGER,
+    FOREIGN KEY (publicacaoid) REFERENCES "publicacao"(codigo),
+    likes INTEGER,
+    dislikes INTEGER,
+    descricao TEXT
+);

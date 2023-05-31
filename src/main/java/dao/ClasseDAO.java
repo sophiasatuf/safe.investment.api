@@ -56,4 +56,25 @@ public class ClasseDAO extends DAO {
 		
 		return resultado;
 	}
+	
+	// Pesquisa classes com base no professorId
+	public ArrayList<Classe> getClasseByProfessorId(int professorId) {
+		ArrayList<Classe> resultado = new ArrayList<Classe>();
+		try {
+			Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+			String sql = "SELECT * FROM " + "classe WHERE professorid =" + professorId + ";";
+			System.out.println(sql);
+			ResultSet rs = st.executeQuery(sql);
+			while(rs.next()) {	            	
+	        	Classe classe = new Classe(rs.getInt("codigo"), rs.getString("titulo"), rs.getString("descricao"), rs.getInt("professorid"));
+	            resultado.add(classe);
+	        }
+			st.close();
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return resultado;
+	}
 }
