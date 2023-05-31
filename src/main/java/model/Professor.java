@@ -6,6 +6,13 @@ public class Professor {
     private boolean stamp;
     private int codigo;
 
+    public Professor() {
+        this.userID = -1;
+        this.avgGrade = -1;
+        this.stamp = false;
+        this.codigo = -1;
+    }
+
     public Professor(int userID, float avgGrade, boolean stamp, int codigo) {
         this.userID = userID;
         this.avgGrade = avgGrade;

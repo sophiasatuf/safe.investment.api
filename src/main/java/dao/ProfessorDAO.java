@@ -32,4 +32,28 @@ public class ProfessorDAO extends DAO {
 			throw new RuntimeException(u);
 		}
 	}
+	
+	// Busca 1 professor
+	public Professor get(int userId) {
+		Professor professor = new Professor();
+		try {  
+			Statement st = conexao.createStatement();
+			String sql = "SELECT (codigo, userID, avgGrade, stamp) FROM \"professor\" WHERE userID = " + userId + ";";
+			System.out.println(sql);
+      ResultSet rs = st.executeQuery(sql);
+      if (rs.next()) {
+        professor =
+          new Professor(
+            rs.getInt("userId"),
+            rs.getFloat("avgGrade"),
+            rs.getBoolean("stamp"),
+            rs.getInt("codigo")
+          );
+      }
+      st.close();
+		} catch (SQLException u) {  
+			throw new RuntimeException(u);
+		}
+		return professor;
+	}
 }

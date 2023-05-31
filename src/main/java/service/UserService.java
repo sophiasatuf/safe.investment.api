@@ -1,5 +1,8 @@
 package service;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import dao.ProfessorDAO;
 import dao.UserDAO;
 import spark.Request;
@@ -15,6 +18,24 @@ public class UserService {
 	
 	public UserService() {}
 	
+	public String esconderSenha(String senha) {
+		String resp = null;
+    try 
+    {
+      MessageDigest md = MessageDigest.getInstance("MD5");
+      md.update(senha.getBytes());
+      byte[] bytes = md.digest();
+      StringBuilder sb = new StringBuilder();
+      for (int i = 0; i < bytes.length; i++) {
+        sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+      }
+      resp = sb.toString();
+    } catch (NoSuchAlgorithmException e) {
+      e.printStackTrace();
+    }
+    return resp;
+	}
+	
 	// Cadastro de usuário
 	public String insert(Request request, Response response) {
 		int age = Integer.parseInt(request.queryParams("age"));
@@ -26,7 +47,7 @@ public class UserService {
 		System.out.println(isProfessor);
 		
 		try {
-			userDAO.insert(new User(cpf, email, fullName, senha, age, -1));
+			userDAO.insert(new User(cpf, email, fullName, esconderSenha(senha), age, -1));
 			System.out.println("Stage 4");
 			User user = userDAO.buscaUser(email, senha);
 			int userID = user.getCodigo();
@@ -43,15 +64,16 @@ public class UserService {
 	}
 	
 	// Login de usuário
-	public int login(Request request, Response response) {
-		int resposta = -1;
+	public String login(Request request, Response response) {
+		String resposta = "";
 		
 		String email = request.queryParams("email");
 		String senha = request.queryParams("senha");
 		
-		User u = userDAO.buscaUser(email, senha);
+		User u = userDAO.buscaUser(email, esconderSenha(senha));
+		Professor p = professorDAO.get(u.getCodigo());
 		if(u != null) {
-			resposta = u.getCodigo();
+			resposta =  "ID: " + Integer.toString(u.getCodigo()) + " NOME: " + u.getFullName() + " ISPROFESSOR: " + Boolean.toString(p.getUserID() != -1 ? true : false);
 		}
 		
 		return resposta;
