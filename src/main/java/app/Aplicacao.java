@@ -59,6 +59,8 @@ public class Aplicacao {
         post("/publicacao/cadastro", (request, response) -> publicacaoService.insert(request, response));
         
         get("/publicacao/busca", (request, response) -> publicacaoService.busca(request, response));
+
+        get("/publicacao/:publicacaoId", (request, response) -> publicacaoService.get(request, response));
 /*
         get("/car/:id", (request, response) -> carService.get(request, response));
 

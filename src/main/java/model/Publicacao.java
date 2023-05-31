@@ -11,6 +11,18 @@ public class Publicacao {
     private int dislikes;
     private String dataPostagem;
 
+    public Publicacao() {
+      this.codigo = -1;
+      this.urlVideo = "";
+      this.hashtags = "";
+      this.titulo = "";
+      this.classeId = -1;
+      this.visualizacoes = -1;
+      this.likes = -1;
+      this.dislikes = -1;
+      this.dataPostagem = "";
+    }
+
     public Publicacao(int codigo, String urlVideo, String hashtags, String titulo, int classeId, int visualizacoes, int likes, int dislikes, String dataPostagem) {
         this.codigo = codigo;
         this.urlVideo = urlVideo;

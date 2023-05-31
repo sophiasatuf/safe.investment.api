@@ -59,4 +59,24 @@ public class PublicacaoDAO extends DAO {
 		
 		return resultado;
 	}
+
+	// Pesquisa publicacao pelo id
+	public Publicacao get(int publicacaoId) {
+		Publicacao resultado = new Publicacao();
+		try {
+			Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+			String sql = "SELECT * FROM publicacao WHERE codigo = " + publicacaoId + ";";
+			System.out.println(sql);
+			ResultSet rs = st.executeQuery(sql);
+      if (rs.next()) {
+        resultado = new Publicacao(rs.getInt("codigo"), rs.getString("urlvideo"), rs.getString("hashtags"), rs.getString("titulo"), rs.getInt("classeid"), rs.getInt("visualizacoes"), rs.getInt("likes"), rs.getInt("dislikes"), rs.getString("datapostagem"));
+      }
+			st.close();
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return resultado;
+	}
 }
