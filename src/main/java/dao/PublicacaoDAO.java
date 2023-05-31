@@ -15,7 +15,7 @@ public class PublicacaoDAO extends DAO {
 		close();
 	}
 	
-	// Adiciona 1 classe
+	// Adiciona 1 publicacao
 	public void insert(Publicacao publicacao) throws Exception {
 		try {
 			Statement st = conexao.createStatement();
@@ -78,5 +78,35 @@ public class PublicacaoDAO extends DAO {
 		}
 		
 		return resultado;
+	}
+
+	// Incrementa Likes através de publicacaoId
+	public void updateLikes(int publicacaoId) {
+		try {
+			Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+			String sql = "UPDATE publicacao" +
+						 "SET likes = likes + 1" +
+						 "WHERE codigo = " + publicacaoId + ";";
+			System.out.println(sql);
+			st.executeUpdate(sql);
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	// Incrementa Dislikes através de publicacaoId
+	public void updateDislikes(int publicacaoId) {
+		try {
+			Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+			String sql = "UPDATE publicacao" +
+						 "SET dislikes = dislikes + 1" +
+						 "WHERE codigo = " + publicacaoId + ";";
+			System.out.println(sql);
+			st.executeUpdate(sql);
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 }

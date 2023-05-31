@@ -4,6 +4,7 @@ import static spark.Spark.*;
 import service.PublicacaoService;
 import service.UserService;
 import service.ClasseService;
+import service.ComentarioService;
 
 // Aplicacao -> service -> DAO -> Banco de Dados
 // Declarar rotas de recebimento dos dados front-end
@@ -13,6 +14,8 @@ public class Aplicacao {
     private static UserService userService = new UserService();
     private static ClasseService classeService = new ClasseService();
     private static PublicacaoService publicacaoService = new PublicacaoService();
+    private static ComentarioService comentarioService = new ComentarioService();
+
 
     public static void main(String[] args) {
         port(6789);
@@ -54,13 +57,26 @@ public class Aplicacao {
         
         get("/classe/buscaProfessor", (request, response) -> classeService.buscaProfessor(request, response));
         
-        // ----------- Publicação ---------- //
+        // ----------- Publicaçãoo ---------- //
         
         post("/publicacao/cadastro", (request, response) -> publicacaoService.insert(request, response));
         
         get("/publicacao/busca", (request, response) -> publicacaoService.busca(request, response));
 
         get("/publicacao/:publicacaoId", (request, response) -> publicacaoService.get(request, response));
+
+        post("publicacao/like", (request, response) -> publicacaoService.incrementaLike(request, response));
+
+        post("publicacao/dislike", (request, response) -> publicacaoService.incrementaDislike(request, response));
+
+        // ----------- Comentário ---------- //
+
+        post("/comentario/cadastro", (request, response) -> comentarioService.insert(request, response));
+
+        post("comentario/like", (request, response) -> comentarioService.incrementaLike(request, response));
+
+        post("comentario/dislike", (request, response) -> comentarioService.incrementaDislike(request, response));
+
 /*
         get("/car/:id", (request, response) -> carService.get(request, response));
 

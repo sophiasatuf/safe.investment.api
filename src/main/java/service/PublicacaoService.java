@@ -113,4 +113,28 @@ public class PublicacaoService {
 
     return resultado;
   }
+
+  // Likes
+  public String incrementaLike(Request request, Response response) {
+    int publicacaoId = Integer.parseInt(request.params(":publicacaoId"));
+
+    try {
+      publicacaoDAO.updateLikes(publicacaoId);
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+    return "";
+  }
+
+  // Dislikes
+  public String incrementaDislike(Request request, Response response) {
+    int publicacaoId = Integer.parseInt(request.params(":publicacaoId"));
+
+    try {
+      publicacaoDAO.updateDislikes(publicacaoId);
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+    return "";
+  }
 }
