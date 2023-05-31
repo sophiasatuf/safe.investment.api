@@ -47,7 +47,7 @@ public class UserService {
 		
 		try {
 			userDAO.insert(new User(cpf, email, fullName, esconderSenha(senha), age, -1));
-			User user = userDAO.buscaUser(email, senha);
+			User user = userDAO.buscaUser(email, esconderSenha(senha));
 			int userID = user.getCodigo();
 			if(isProfessor) {
 				professorDAO.insert(new Professor(userID, 0, false, -1));
@@ -70,7 +70,11 @@ public class UserService {
 		User u = userDAO.buscaUser(email, esconderSenha(senha));
 		Professor p = professorDAO.get(u.getCodigo());
 		if(u != null) {
-			resposta =  "ID: " + Integer.toString(u.getCodigo()) + " NOME: " + u.getFullName() + " ISPROFESSOR: " + Boolean.toString(p.getUserID() != -1 ? true : false);
+			resposta =  "ID: " +
+					Integer.toString(u.getCodigo()) +
+					" NOME: " + u.getFullName() +
+					" ISPROFESSOR: " + Boolean.toString(p.getCodigo() != -1 ? true : false) +
+					(p.getUserID() != -1 ? (" PROFESSORID: " + Integer.toString(p.getCodigo())) : "");
 		}
 		
 		return resposta;

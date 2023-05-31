@@ -2,10 +2,8 @@ package dao;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
 import model.Classe;
-import model.User;
 
 public class ClasseDAO extends DAO {
 	public ClasseDAO() {

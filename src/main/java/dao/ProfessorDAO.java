@@ -38,13 +38,14 @@ public class ProfessorDAO extends DAO {
 		Professor professor = new Professor();
 		try {  
 			Statement st = conexao.createStatement();
-			String sql = "SELECT (codigo, userID, avgGrade, stamp) FROM \"professor\" WHERE userID = " + userId + ";";
+			String sql = "SELECT * FROM professor WHERE userid = " + userId + ";";
 			System.out.println(sql);
       ResultSet rs = st.executeQuery(sql);
       if (rs.next()) {
+        // System.out.println(rs.get);
         professor =
           new Professor(
-            rs.getInt("userId"),
+            rs.getInt("userid"),
             rs.getFloat("avgGrade"),
             rs.getBoolean("stamp"),
             rs.getInt("codigo")
