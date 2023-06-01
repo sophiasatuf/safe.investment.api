@@ -65,17 +65,17 @@ public class Aplicacao {
 
         get("/publicacao/:publicacaoId", (request, response) -> publicacaoService.get(request, response));
 
-        post("publicacao/like", (request, response) -> publicacaoService.incrementaLike(request, response));
+        put("publicacao/like", (request, response) -> publicacaoService.incrementaLike(request, response));
 
-        post("publicacao/dislike", (request, response) -> publicacaoService.incrementaDislike(request, response));
+        put("publicacao/dislike", (request, response) -> publicacaoService.incrementaDislike(request, response));
 
         // ----------- Comentário ---------- //
 
         post("/comentario/cadastro", (request, response) -> comentarioService.insert(request, response));
 
-        post("comentario/like", (request, response) -> comentarioService.incrementaLike(request, response));
+        put("comentario/like", (request, response) -> comentarioService.incrementaLike(request, response));
 
-        post("comentario/dislike", (request, response) -> comentarioService.incrementaDislike(request, response));
+        put("comentario/dislike", (request, response) -> comentarioService.incrementaDislike(request, response));
 
 /*
         get("/car/:id", (request, response) -> carService.get(request, response));

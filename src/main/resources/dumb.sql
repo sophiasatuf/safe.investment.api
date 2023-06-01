@@ -54,3 +54,12 @@ CREATE TABLE public.comentarios (
     dislikes INTEGER,
     descricao TEXT
 );
+
+CREATE TABLE public.userrating (
+    codigo SERIAL PRIMARY KEY,
+    userid INTEGER,
+    FOREIGN KEY (userid) REFERENCES "user"(codigo),
+    publicacaoid INTEGER,
+    FOREIGN KEY (publicacaoid) REFERENCES "publicacao"(codigo),
+	rating INTEGER CHECK (rating >= 1 AND rating <= 5)
+);
