@@ -1,10 +1,10 @@
 CREATE TABLE public.user (
 	codigo SERIAL PRIMARY KEY,
-    	CPF CHAR(11),
+    	cpf CHAR(11),
     	email VARCHAR(50),
-    	full_name VARCHAR(250),
+    	full_name VARCHAR(150),
 	senha VARCHAR(50),
-    	age INTEGER
+    	datanascimento DATE
 );
 
 CREATE TABLE public.professor (

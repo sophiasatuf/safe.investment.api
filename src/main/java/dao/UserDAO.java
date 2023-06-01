@@ -22,13 +22,13 @@ public class UserDAO extends DAO {
 	public void insert(User user) throws Exception {
 		try {
 			Statement st = conexao.createStatement();
-			String sql = "INSERT INTO \"user\" (cpf, email, full_name, senha, age)"
+			String sql = "INSERT INTO \"user\" (cpf, email, full_name, senha, datanascimento)"
 				       + " VALUES ('"
 				       + user.getCPF() + "', '" 
 				       + user.getEmail() + "', '"
 				       + user.getFullName() + "', '"
 				       + user.getSenha() + "', '"
-				       + user.getAge() + "');";
+				       + user.getDataNascimento() + "');";
 			System.out.println(sql);
 			st.executeUpdate(sql);
 	        
@@ -49,7 +49,7 @@ public class UserDAO extends DAO {
 			System.out.println(sql);
 			ResultSet rs = st.executeQuery(sql);	
 	        if(rs.next()){            
-	        	 user = new User(rs.getString("cpf"), rs.getString("email"), rs.getString("fullName"), rs.getString("senha"), rs.getInt("age"), rs.getInt("codigo"));
+	        	 user = new User(rs.getString("cpf"), rs.getString("email"), rs.getString("full_name"), rs.getString("senha"), rs.getString("datanascimento"), rs.getInt("codigo"));
 	        }
 	        st.close();
 		} catch (Exception e) {
@@ -78,7 +78,7 @@ public class UserDAO extends DAO {
 			System.out.println(sql);
 			ResultSet rs = st.executeQuery(sql);	           
 	        while(rs.next()) {	            	
-	        	User user = new User(rs.getString("cpf"), rs.getString("email"), rs.getString("fullName"), rs.getString("senha"), rs.getInt("age"), rs.getInt("codigo"));
+	        	User user = new User(rs.getString("cpf"), rs.getString("email"), rs.getString("full_name"), rs.getString("senha"), rs.getString("datanascimento"), rs.getInt("codigo"));
 	            xs.add(user);
 	        }
 	        st.close();
@@ -98,8 +98,8 @@ public class UserDAO extends DAO {
 			        user.getEmail() +
 			        "', full_name = '" +
 			        user.getFullName() +
-			        "', age = '" +
-			        user.getAge() +
+			        "', datanascimento = '" +
+			        user.getDataNascimento() +
 			        "', senha = '" +
 			        user.getSenha() +
 			        "', cpf = '" +
@@ -143,7 +143,7 @@ public class UserDAO extends DAO {
 			System.out.println(sql);
 			ResultSet rs = st.executeQuery(sql);	
 	        if(rs.next()){
-	        	 user = new User(rs.getString("cpf"), rs.getString("email"), rs.getString("full_name"), rs.getString("senha"), rs.getInt("age"), rs.getInt("codigo"));
+	        	 user = new User(rs.getString("cpf"), rs.getString("email"), rs.getString("full_name"), rs.getString("senha"), rs.getString("datanascimento"), rs.getInt("codigo"));
 	        }
 	        st.close();
 		} catch (Exception e) {

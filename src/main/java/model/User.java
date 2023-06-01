@@ -9,15 +9,15 @@ public class User {
     private String email;
     private String fullName;
     private String senha;
-    private int age;
+    private String dataNascimento;
     
-    public User(String CPF, String email, String fullName, String senha, int age, int codigo) {
+    public User(String CPF, String email, String fullName, String senha, String dataNascimento, int codigo) {
     	this.codigo = codigo;
         this.CPF = CPF;
         this.email = email;
         this.fullName = fullName;
         this.senha = senha;
-        this.age = age;
+        this.dataNascimento = dataNascimento;
     }
     
     // Getters
@@ -41,8 +41,8 @@ public class User {
         return fullName;
     }
     
-    public int getAge() {
-        return age;
+    public String getDataNascimento() {
+        return dataNascimento;
     }
     
     // Setters
@@ -66,7 +66,7 @@ public class User {
         this.fullName = fullName;
     }
     
-    public void setAge(int age) {
-        this.age = age;
+    public void setDataNascimento(String dataNascimento) {
+        this.dataNascimento = dataNascimento;
     }
 }

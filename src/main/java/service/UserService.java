@@ -38,7 +38,7 @@ public class UserService {
 	
 	// Cadastro de usuário
 	public String insert(Request request, Response response) {
-		int age = Integer.parseInt(request.queryParams("age"));
+		String dataNascimento = request.queryParams("dataNascimento");
 		String cpf = request.queryParams("cpf");
 		String email = request.queryParams("email");
 		String fullName = request.queryParams("fullName");
@@ -46,7 +46,7 @@ public class UserService {
 		boolean isProfessor = Boolean.parseBoolean(request.queryParams("isProfessor"));
 		
 		try {
-			userDAO.insert(new User(cpf, email, fullName, esconderSenha(senha), age, -1));
+			userDAO.insert(new User(cpf, email, fullName, esconderSenha(senha), dataNascimento, -1));
 			User user = userDAO.buscaUser(email, esconderSenha(senha));
 			int userID = user.getCodigo();
 			if(isProfessor) {
