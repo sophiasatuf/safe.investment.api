@@ -61,5 +61,5 @@ CREATE TABLE public.userrating (
     FOREIGN KEY (userid) REFERENCES "user"(codigo),
     publicacaoid INTEGER,
     FOREIGN KEY (publicacaoid) REFERENCES "publicacao"(codigo),
-	rating INTEGER CHECK (rating >= 1 AND rating <= 5)
+    rating INTEGER CHECK (rating >= 1 AND rating <= 5)
 );
