@@ -1,6 +1,7 @@
 package service;
 
 import dao.ClasseDAO;
+import dao.UserClasseDAO;
 import java.util.ArrayList;
 import java.util.StringJoiner;
 import model.Classe;
@@ -11,6 +12,7 @@ import spark.Response;
 public class ClasseService {
 
   public ClasseDAO classeDAO = new ClasseDAO();
+  public UserClasseDAO userClasseDAO = new UserClasseDAO();
 
   public ClasseService() {}
 
@@ -86,5 +88,30 @@ public class ClasseService {
     String resultado = joiner.toString();
 
     return "[" + resultado + "]";
+  }
+
+  // busca classe com base na classe id
+  public String buscaPorId(Request request, Response response) {
+    int classeId = Integer.parseInt(request.params(":classeId"));
+    Classe c = new Classe();
+    int nInscritos = -1;
+
+    try {
+      c = classeDAO.get(classeId);
+      nInscritos = userClasseDAO.getNInscritos(classeId);
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+
+    StringJoiner joiner = new StringJoiner(", ");
+    joiner.add("{ \"codigo\": \"" + Integer.toString(c.getCodigo()) + "\"");
+    joiner.add(" \"titulo\": \"" + c.getTitulo() + "\"");
+    joiner.add(" \"descricao\": \"" + c.getDescricao() + "\"");
+    joiner.add(" \"nInscritos\": \"" + Integer.toString(nInscritos) + "\"");
+    joiner.add(" \"professorId\":  \"" + Integer.toString(c.getProfessorId()) + "\" }");
+
+    String resultado = joiner.toString();
+
+    return resultado;
   }
 }

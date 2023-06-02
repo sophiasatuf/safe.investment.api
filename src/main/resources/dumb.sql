@@ -41,7 +41,8 @@ CREATE TABLE public.userClasse (
     userid INTEGER,
     FOREIGN KEY (userid) REFERENCES "user"(codigo),
     classeid INTEGER,
-    FOREIGN KEY (classeid) REFERENCES "classe"(codigo)
+    FOREIGN KEY (classeid) REFERENCES "classe"(codigo),
+    CONSTRAINT unique_user_classe_combination UNIQUE (userid, classeid)
 );
 
 CREATE TABLE public.comentarios (

@@ -5,6 +5,8 @@ import service.PublicacaoService;
 import service.UserService;
 import service.ClasseService;
 import service.ComentarioService;
+import service.UserClasseService;
+import service.ProfessorService;
 
 // Aplicacao -> service -> DAO -> Banco de Dados
 // Declarar rotas de recebimento dos dados front-end
@@ -15,7 +17,8 @@ public class Aplicacao {
     private static ClasseService classeService = new ClasseService();
     private static PublicacaoService publicacaoService = new PublicacaoService();
     private static ComentarioService comentarioService = new ComentarioService();
-
+    private static UserClasseService userClasseService = new UserClasseService();
+    private static ProfessorService professorService = new ProfessorService();
 
     public static void main(String[] args) {
         port(6789);
@@ -48,14 +51,20 @@ public class Aplicacao {
         post("/user/cadastro", (request, response) -> userService.insert(request, response)); // rota
         
         post("/user/login", (request, response) -> userService.login(request, response));
+
+        // ----------- Professor ---------- //
+
+        get("/professor/:professorId", (request, response) -> professorService.get(request, response));
         
         // ----------- Classe ---------- //
         
         post("/classe/cadastro", (request, response) -> classeService.insert(request, response));
         
         get("/classe/busca", (request, response) -> classeService.busca(request, response));
-        
+
         get("/classe/buscaProfessor", (request, response) -> classeService.buscaProfessor(request, response));
+
+        get("/classe/:classeId", (request, response) -> classeService.buscaPorId(request, response));
         
         // ----------- Publicaçãoo ---------- //
         
@@ -65,29 +74,34 @@ public class Aplicacao {
 
         get("/publicacao/:publicacaoId", (request, response) -> publicacaoService.get(request, response));
 
-        put("publicacao/like", (request, response) -> publicacaoService.incrementaLike(request, response));
+        get("/publicacoes", (request, response) -> publicacaoService.getPublicacoes(request, response));
 
-        put("publicacao/dislike", (request, response) -> publicacaoService.incrementaDislike(request, response));
+        post("publicacao/like/:publicacaoId", (request, response) -> publicacaoService.incrementaLike(request, response));
+
+        post("publicacao/dislike/:publicacaoId", (request, response) -> publicacaoService.incrementaDislike(request, response));
+
+        post("publicacao/visualizacao/:publicacaoId", (request, response) -> publicacaoService.incrementaVisualizacao(request, response));
 
         // ----------- Comentário ---------- //
 
         post("/comentario/cadastro", (request, response) -> comentarioService.insert(request, response));
 
-        put("comentario/like", (request, response) -> comentarioService.incrementaLike(request, response));
+        get("/comentarios/:publicacaoId", (request, response) -> comentarioService.getComentariosPublicacao(request, response));
 
-        put("comentario/dislike", (request, response) -> comentarioService.incrementaDislike(request, response));
+        post("comentario/like/:comentarioId", (request, response) -> comentarioService.incrementaLike(request, response));
 
-/*
-        get("/car/:id", (request, response) -> carService.get(request, response));
+        post("comentario/dislike/:comentarioId", (request, response) -> comentarioService.incrementaDislike(request, response));
 
-        get("/car/list", (request, response) -> carService.getAll(request, response));
+        get("/comentarios/contar/:comentarioId", (request, response) -> comentarioService.getContarComentariosPublicacao(request, response));
+        
+        // ----------- UsuárioClasse ---------- //
 
-        get("/car/update/:id", (request, response) -> carService.getToUpdate(request, response));
+        post("/userclasse/inscrever", (request, response) -> userClasseService.insert(request, response));
 
-        post("/car/update/:id", (request, response) -> carService.update(request, response));
+        get("/userclasse/isInscrito", (request, response) -> userClasseService.isInscrito(request, response));
 
-        get("/car/delete/:id", (request, response) -> carService.delete(request, response));
-*/
+        post("/userclasse/desinscrever", (request, response) -> userClasseService.delete(request, response));
 
+        get("/userclasse/:userId", (request, response) -> userClasseService.buscaPorUserId(request, response));
     }
 }

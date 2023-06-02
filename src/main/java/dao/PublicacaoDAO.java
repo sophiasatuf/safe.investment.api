@@ -78,6 +78,27 @@ public class PublicacaoDAO extends DAO {
 		}
 		
 		return resultado;
+	}	
+
+	// Retorna todas as publicacoes
+	public ArrayList<Publicacao> getPublicacoes() {
+		ArrayList<Publicacao> resultado = new ArrayList<Publicacao>();
+		try {
+			Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+			String sql = "SELECT * FROM publicacao";
+			System.out.println(sql);
+			ResultSet rs = st.executeQuery(sql);
+			while(rs.next()) {	            	
+	        	Publicacao publicacao = new Publicacao(rs.getInt("codigo"), rs.getString("urlvideo"), rs.getString("hashtags"), rs.getString("titulo"), rs.getInt("classeid"), rs.getInt("visualizacoes"), rs.getInt("likes"), rs.getInt("dislikes"), rs.getString("datapostagem"));
+	            resultado.add(publicacao);
+	        }
+			st.close();
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return resultado;
 	}
 
 	// Incrementa Likes através de publicacaoId
@@ -85,8 +106,8 @@ public class PublicacaoDAO extends DAO {
 		try {
 			Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
 			String sql = "UPDATE publicacao" +
-						 "SET likes = likes + 1" +
-						 "WHERE codigo = " + publicacaoId + ";";
+						 " SET likes = likes + 1" +
+						 " WHERE codigo = " + publicacaoId + ";";
 			System.out.println(sql);
 			st.executeUpdate(sql);
 		}
@@ -100,8 +121,23 @@ public class PublicacaoDAO extends DAO {
 		try {
 			Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
 			String sql = "UPDATE publicacao" +
-						 "SET dislikes = dislikes + 1" +
-						 "WHERE codigo = " + publicacaoId + ";";
+						 " SET dislikes = dislikes + 1" +
+						 " WHERE codigo = " + publicacaoId + ";";
+			System.out.println(sql);
+			st.executeUpdate(sql);
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	// Incrementa Visualizacao através de publicacaoId
+	public void updateVisualizacao(int publicacaoId) {
+		try {
+			Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+			String sql = "UPDATE publicacao" +
+						 " SET visualizacoes = visualizacoes + 1" +
+						 " WHERE codigo = " + publicacaoId + ";";
 			System.out.println(sql);
 			st.executeUpdate(sql);
 		}

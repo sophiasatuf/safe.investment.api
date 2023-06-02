@@ -102,7 +102,7 @@ public class PublicacaoService {
     joiner.add(
       " \"visualizacoes\": \"" + Integer.toString(p.getVisualizacoes()) + "\""
     );
-    joiner.add(" \"likes\": \"" + Integer.toString(p.getDislikes()) + "\"");
+    joiner.add(" \"likes\": \"" + Integer.toString(p.getLikes()) + "\"");
     joiner.add(" \"dislikes\": \"" + Integer.toString(p.getDislikes()) + "\"");
     joiner.add(" \"datapostagem\":  \"" + p.getDataPostagem() + "\"");
     joiner.add(
@@ -112,6 +112,46 @@ public class PublicacaoService {
     String resultado = joiner.toString();
 
     return resultado;
+  }
+
+  // Busca Publicacoes
+  public String getPublicacoes(Request request, Response response) {
+    ArrayList<Publicacao> lista = new ArrayList<Publicacao>();
+
+    try {
+      lista = publicacaoDAO.getPublicacoes();
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+
+    StringJoiner joiner = new StringJoiner(", ");
+    for (Publicacao objeto : lista) {
+      joiner.add(
+        "{ \"codigo\": \"" + Integer.toString(objeto.getCodigo()) + "\""
+      );
+      joiner.add(" \"titulo\":  \"" + objeto.getTitulo() + "\"");
+      joiner.add(" \"hashtags\":  \"" + objeto.getHashtags() + "\"");
+      joiner.add(" \"urlVideo\":  \"" + objeto.getUrlVideo() + "\"");
+      joiner.add(
+        " \"visualizacoes\": \"" +
+        Integer.toString(objeto.getVisualizacoes()) +
+        "\""
+      );
+      joiner.add(
+        " \"likes\": \"" + Integer.toString(objeto.getDislikes()) + "\""
+      );
+      joiner.add(
+        " \"dislikes\": \"" + Integer.toString(objeto.getDislikes()) + "\""
+      );
+      joiner.add(" \"datapostagem\":  \"" + objeto.getDataPostagem() + "\"");
+      joiner.add(
+        " \"classeId\":  \"" + Integer.toString(objeto.getClasseId()) + "\" }"
+      );
+    }
+
+    String resultado = joiner.toString();
+
+    return "[" + resultado + "]";
   }
 
   // Likes
@@ -132,6 +172,18 @@ public class PublicacaoService {
 
     try {
       publicacaoDAO.updateDislikes(publicacaoId);
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+    return "";
+  }
+
+  // Visualizacao
+  public String incrementaVisualizacao(Request request, Response response) {
+    int publicacaoId = Integer.parseInt(request.params(":publicacaoId"));
+
+    try {
+      publicacaoDAO.updateVisualizacao(publicacaoId);
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }
