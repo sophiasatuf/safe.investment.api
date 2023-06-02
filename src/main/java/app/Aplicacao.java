@@ -7,6 +7,7 @@ import service.ClasseService;
 import service.ComentarioService;
 import service.UserClasseService;
 import service.ProfessorService;
+import service.RatingService;
 
 // Aplicacao -> service -> DAO -> Banco de Dados
 // Declarar rotas de recebimento dos dados front-end
@@ -19,6 +20,7 @@ public class Aplicacao {
     private static ComentarioService comentarioService = new ComentarioService();
     private static UserClasseService userClasseService = new UserClasseService();
     private static ProfessorService professorService = new ProfessorService();
+    private static RatingService ratingService = new RatingService();
 
     public static void main(String[] args) {
         port(6789);
@@ -103,5 +105,9 @@ public class Aplicacao {
         post("/userclasse/desinscrever", (request, response) -> userClasseService.delete(request, response));
 
         get("/userclasse/:userId", (request, response) -> userClasseService.buscaPorUserId(request, response));
+
+        // ----------- Rating ---------- //
+
+        post("/rating", (request, response) -> ratingService.post(request, response));
     }
 }
